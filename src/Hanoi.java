@@ -1,57 +1,80 @@
 import java.util.Stack;
 
 public class Hanoi {
-    private Stack<String> torreI;
-    private Stack<String> torreP;
-    private Stack<String> torreD;
+    public enum Torre {
+        TORRE_A,
+        TORRE_B,
+        TORRE_C
+    }
+
     private int numDiscos;
-    private int minIntentos;
-    private int cantIntentos;
+    private Stack<Integer> torreA;
+    private Stack<Integer> torreB;
+    private Stack<Integer> torreC;
+    private int movimientosRealizados;
 
-
-    public Hanoi(){
-        cantIntentos = 0;
-        numDiscos = 0;
-        torreI = new Stack<>();
-        torreP = new Stack<>();
-        torreD = new Stack<>();
-    }
-    public int getMinIntentos() {
-        return minIntentos;
+    public Hanoi(int numDiscos) {
+        this.numDiscos = numDiscos;
+        this.movimientosRealizados = 0;
+        iniciarTorres();
     }
 
-    public void setMinIntentos() {
-        this.minIntentos = ((int)Math.pow(2, numDiscos))-1;
+    private void iniciarTorres() {
+        torreA = new Stack<>();
+        torreB = new Stack<>();
+        torreC = new Stack<>();
+
+        for (int i = numDiscos; i >= 1; i--) {
+            torreA.push(i);
+        }
     }
 
-    public int getCantIntentosIntentos() {
-        return cantIntentos;
-    }
-
-    public void setCantIntentosIntentos(int intentos) {
-        this.cantIntentos = intentos;
-    }
-
-    public Stack<String> getTorreI() {
-        return torreI;
-    }
-
-    public Stack<String> getTorreP() {
-        return torreP;
-    }
-
-    public Stack<String> getTorreD() {
-        return torreD;
-    }
-
-    public void setNumDiscosDiscos(int nDiscos) {
-        this.numDiscos = nDiscos;
-    }
-
-    public int getNumDiscosDiscos() {
+    public int getNumDiscos() {
         return numDiscos;
     }
 
+    public int getMovimientosRealizados() {
+        return movimientosRealizados;
+    }
+
+    public Stack<Integer> getTorreA() {
+        return torreA;
+    }
+
+    public Stack<Integer> getTorreB() {
+        return torreB;
+    }
+
+    public Stack<Integer> getTorreC() {
+        return torreC;
+    }
+
+    public boolean moverDisco(Torre origen, Torre destino) {
+        Stack<Integer> torreOrigen = getTorre(origen);
+        Stack<Integer> torreDestino = getTorre(destino);
+
+        if (torreOrigen.isEmpty()) {
+            return false; // La torre de origen está vacía
+        }
+
+        if (!torreDestino.isEmpty() && torreOrigen.peek() > torreDestino.peek()) {
+            return false; // El disco del origen es más grande que el disco del destino
+        }
+
+        int disco = torreOrigen.pop();
+        torreDestino.push(disco);
+        movimientosRealizados++;
+
+        return true;
+    }
+
+    private Stack<Integer> getTorre(Torre torre) {
+        if (torre == Torre.TORRE_A) {
+            return torreA;
+        } else if (torre == Torre.TORRE_B) {
+            return torreB;
+        } else {
+            return torreC;
+        }
+    }
 }
-
-
