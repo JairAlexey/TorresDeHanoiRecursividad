@@ -1,11 +1,6 @@
 import java.util.Stack;
 
 public class Hanoi {
-    public enum Torre {
-        TORRE_A,
-        TORRE_B,
-        TORRE_C
-    }
 
     private int numDiscos;
     private Stack<Integer> torreA;
@@ -77,4 +72,11 @@ public class Hanoi {
             return torreC;
         }
     }
+
+    public enum Torre {
+        TORRE_A,
+        TORRE_B,
+        TORRE_C
+    }
+
 }
